@@ -1,0 +1,7 @@
+name: TimeRanks
+main: me.crosant.timeranks.TimeRanks
+version: 0.0.1
+commands:
+    Ranks:
+          description: TimeRanks
+          usage: /<command> arg
