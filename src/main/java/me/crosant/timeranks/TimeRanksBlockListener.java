@@ -5,12 +5,15 @@
 package me.crosant.timeranks;
 
 import java.util.logging.Logger;
+import net.milkbowl.vault.Vault;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-import org.bukkit.event.block.BlockListener;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.plugin.Plugin;
 import ru.tehkode.permissions.PermissionEntity;
 import ru.tehkode.permissions.PermissionManager;
 import ru.tehkode.permissions.bukkit.PermissionsEx;
@@ -19,16 +22,15 @@ import ru.tehkode.permissions.bukkit.PermissionsEx;
  *
  * @author Florian
  */
-public class TimeRanksBlockListener extends BlockListener{
+public class TimeRanksBlockListener implements Listener{
 
+    
     public static TimeRanks plugin;
     
-    TimeRanksBlockListener(TimeRanks instance) {
-        plugin = instance;
-    }
     
     
-    @Override
+    
+        @EventHandler
             public void onBlockPlace(BlockPlaceEvent event){
                 int blocks;
                 Player player = event.getPlayer();
@@ -56,7 +58,7 @@ public class TimeRanksBlockListener extends BlockListener{
                 if (TimeRanks.player_blocks.get(player.getName()) > plugin.getConfig().getInt("Rank.6.blocks")){
                     
                     player.sendMessage("You are now a " + plugin.getConfig().getString("Rank.6.name"));
-
+                    plugin.giveCash(player.getName(), plugin.getConfig().getInt("Rank.6.money"));
                   manager.getUser(player).addGroup(plugin.getConfig().getString("Rank.6.name"));  
                   if(manager.getUser(player).getGroupsNames().toString().contains(plugin.getConfig().getString("Rank.5.name")))manager.getUser(player).removeGroup(plugin.getConfig().getString("Rank.5.name"));   
                     
@@ -65,8 +67,7 @@ public class TimeRanksBlockListener extends BlockListener{
                 else if (TimeRanks.player_blocks.get(player.getName()) > plugin.getConfig().getInt("Rank.5.blocks")){
                     
                     player.sendMessage("You are now a " + plugin.getConfig().getString("Rank.5.name"));
-                    
-                    
+                    plugin.giveCash(player.getName(), plugin.getConfig().getInt("Rank.5.money"));
                     manager.getUser(player).addGroup(plugin.getConfig().getString("Rank.5.name"));  
                  if(manager.getUser(player).getGroupsNames().toString().contains(plugin.getConfig().getString("Rank.4.name")))manager.getUser(player).removeGroup(plugin.getConfig().getString("Rank.4.name"));  
                 }
@@ -74,7 +75,7 @@ public class TimeRanksBlockListener extends BlockListener{
                 else if (TimeRanks.player_blocks.get(player.getName()) > plugin.getConfig().getInt("Rank.4.blocks")){
                     
                     player.sendMessage("You are now a " + plugin.getConfig().getString("Rank.4.name"));
-                    
+                    plugin.giveCash(player.getName(), plugin.getConfig().getInt("Rank.4.money"));
                     
                     manager.getUser(player).addGroup(plugin.getConfig().getString("Rank.4.name"));  
                  if(manager.getUser(player).getGroupsNames().toString().contains(plugin.getConfig().getString("Rank.3.name")))manager.getUser(player).removeGroup(plugin.getConfig().getString("Rank.3.name"));   
@@ -83,7 +84,7 @@ public class TimeRanksBlockListener extends BlockListener{
                 else if (TimeRanks.player_blocks.get(player.getName()) > plugin.getConfig().getInt("Rank.3.blocks")){
                     
                     player.sendMessage("You are now a " + plugin.getConfig().getString("Rank.3.name"));
-                    
+                    plugin.giveCash(player.getName(), plugin.getConfig().getInt("Rank.3.money"));
                     
                     manager.getUser(player).addGroup(plugin.getConfig().getString("Rank.3.name"));  
                   if(manager.getUser(player).getGroupsNames().toString().contains(plugin.getConfig().getString("Rank.2.name")))manager.getUser(player).removeGroup(plugin.getConfig().getString("Rank.2.name"));   
@@ -92,7 +93,7 @@ public class TimeRanksBlockListener extends BlockListener{
                 else if (TimeRanks.player_blocks.get(player.getName()) > plugin.getConfig().getInt("Rank.2.blocks")){
                     
                     player.sendMessage("You are now a " + plugin.getConfig().getString("Rank.2.name"));
-                    
+                    plugin.giveCash(player.getName(), plugin.getConfig().getInt("Rank.2.money"));
                     
                     manager.getUser(player).addGroup(plugin.getConfig().getString("Rank.2.name"));
                     
@@ -103,7 +104,7 @@ public class TimeRanksBlockListener extends BlockListener{
                 else if (TimeRanks.player_blocks.get(player.getName()) > plugin.getConfig().getInt("Rank.1.blocks")){
                     
                     player.sendMessage("You are now a " + plugin.getConfig().getString("Rank.1.name"));
-                    
+                    plugin.giveCash(player.getName(), plugin.getConfig().getInt("Rank.1.money"));
                     
                     manager.getUser(player).addGroup(plugin.getConfig().getString("Rank.1.name"));  
  

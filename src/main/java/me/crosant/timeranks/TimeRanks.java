@@ -4,17 +4,18 @@ import java.io.File;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.bukkit.Bukkit;
+import net.milkbowl.vault.economy.*;
+import net.milkbowl.vault.*;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.event.Event;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
-import org.bukkit.event.EventPriority;
-import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 
@@ -26,14 +27,15 @@ public class TimeRanks extends JavaPlugin
 	public static String db;
 	public static String host;
         public static String port;
-    
+        public static Economy economy = null;
+
         public static Map<String, Integer> player_blocks = new HashMap<String, Integer>();
         
-        
-        private final TimeRanksPlayerListener playerListener = new TimeRanksPlayerListener(this);
-        private final TimeRanksBlockListener blockListener = new TimeRanksBlockListener(this);
+        private static Vault vault = null;
+
+
     	protected FileConfiguration config;
-	public static final Logger log = Logger.getLogger("Minecraft");
+	private static final Logger log = Logger.getLogger("Minecraft");
     
     @Override
    public void onDisable() {
@@ -43,12 +45,13 @@ public class TimeRanks extends JavaPlugin
         SQL.setBlocks(player.getName(), TimeRanks.player_blocks.get(player.getName()));
         }
         
-        
-		log.info("TimeRanks V0.0.1 has been disabled.");
+            
+		log.info(String.format("[%s] Disabled Version %s", getDescription().getName(), getDescription().getVersion()));
 	}
 
     @Override
 	public void onEnable() {
+
         
                 port = this.getConfig().getString("SQL.port");
         username = this.getConfig().getString("SQL.username");
@@ -125,9 +128,8 @@ public class TimeRanks extends JavaPlugin
             
             PluginManager pm = this.getServer().getPluginManager();
             
-            pm.registerEvent(Event.Type.BLOCK_PLACE, blockListener, Event.Priority.Normal, this);
-            pm.registerEvent(Event.Type.PLAYER_JOIN, playerListener, Event.Priority.Normal, this);
-            pm.registerEvent(Event.Type.PLAYER_QUIT, playerListener, Event.Priority.Normal, this);
+            pm.registerEvents(new TimeRanksBlockListener(), this);
+            pm.registerEvents(new TimeRanksPlayerListener(), this);
             
             
             
@@ -163,6 +165,12 @@ public class TimeRanks extends JavaPlugin
         this.getConfig().set("Rank.4.blocks", "20");
         this.getConfig().set("Rank.5.blocks", "50");
         this.getConfig().set("Rank.6.blocks", "100");
+        this.getConfig().set("Rank.1.money", 1);
+        this.getConfig().set("Rank.2.money", 5);
+        this.getConfig().set("Rank.3.money", 10);
+        this.getConfig().set("Rank.4.money", 20);
+        this.getConfig().set("Rank.5.money", 50);
+        this.getConfig().set("Rank.6.money", 100);
         
         
         
@@ -180,12 +188,29 @@ public class TimeRanks extends JavaPlugin
         db = this.getConfig().getString("SQL.db");
         password = this.getConfig().getString("SQL.password");
         host = this.getConfig().getString("SQL.host");
-        
-    	log.info("TimeRanks V0.0.1 has been enabled.");
-    	
-    	
-    	
+                Plugin x = this.getServer().getPluginManager().getPlugin("Vault");
+        if(x != null & x instanceof Vault) {
+            vault = (Vault) x;
+            
+            log.info(String.format("[%s] Hooked %s %s", getDescription().getName(), vault.getDescription().getName(), vault.getDescription().getVersion()));
+        } else {
+            log.warning(String.format("[%s] Vault was _NOT_ found! Disabling plugin.", getDescription().getName()));
+            getPluginLoader().disablePlugin(this);
+            return;
         }
+        
+        if (!setupEconomy() ) {
+            log.info(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
+		log.info(String.format("[%s] Enabled Version %s", getDescription().getName(), getDescription().getVersion()));
+    	
+                
+        }
+    
+
+
         
     @Override
         public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -279,5 +304,24 @@ public class TimeRanks extends JavaPlugin
          }
      
      return true;
+    }
+
+    private boolean setupEconomy() {
+        if (getServer().getPluginManager().getPlugin("Vault") == null) {
+            return false;
+        }
+        RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
+        if (rsp == null) {
+            return false;
+        }
+        economy = rsp.getProvider();
+        return economy != null;
+    }
+    
+    public boolean giveCash(String player,int amount){
+        
+        economy.depositPlayer(player, amount);       
+        return false;
+        
     }
 }

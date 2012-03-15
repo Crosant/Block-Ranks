@@ -5,3 +5,4 @@ commands:
     Ranks:
           description: TimeRanks
           usage: /<command> arg
+depend: [Vault]

@@ -8,23 +8,21 @@ import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 /**
  *
  * @author Florian
  */
-public class TimeRanksPlayerListener extends PlayerListener{
+public class TimeRanksPlayerListener implements Listener{
             public static String playername;
             public static TimeRanks plugin;
        
-        public TimeRanksPlayerListener(TimeRanks instance) {
-                plugin = instance;
-        }
- 
-    @Override
+
+        @EventHandler
         public void onPlayerJoin(PlayerJoinEvent event){
             
         Player player = event.getPlayer();
@@ -97,7 +95,7 @@ public class TimeRanksPlayerListener extends PlayerListener{
     }
         
     
-    @Override
+        @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event){
         
         String player = event.getPlayer().getName();
