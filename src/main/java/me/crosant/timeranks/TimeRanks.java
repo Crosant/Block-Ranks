@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import net.milkbowl.vault.economy.*;
 import net.milkbowl.vault.*;
 import net.milkbowl.vault.permission.Permission;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.Event;
 import org.bukkit.plugin.PluginManager;
@@ -180,6 +181,9 @@ public class TimeRanks extends JavaPlugin
     	this.getConfig().set("Messages.nopermission", "You don't have the required permissions to do this.");
     	this.getConfig().set("Messages.rankup", "You are now a");
     	this.getConfig().set("Messages.blocks", "You have set");
+        this.getConfig().getString("Messanges.reloadstart", "Started");
+        this.getConfig().set("Messanges.reloadend", "Finished");
+        
   	
     	
     	
@@ -301,10 +305,17 @@ public class TimeRanks extends JavaPlugin
         
     }
                  
-                 else if (args[0].equalsIgnoreCase("reload") && perms.has(player, "TimeRanks.reload")){
+                 else if (args[0].equalsIgnoreCase("reload")){
+                     if (perms.has(player, "TimeRanks.reload")){
+                     
+                     Bukkit.getServer().broadcastMessage("[TimeRanks] "+ this.getConfig().getString("Messanges.reloadstart"));
                      
                      this.reloadConfig();
                      
+                     Bukkit.getServer().broadcastMessage("[TimeRanks] " + this.getConfig().getString("Messanges.reloadend"));
+                     }
+                     else
+                         player.sendMessage(this.getConfig().getString("Messages.nopermission"));
                  }
                      
                  }
