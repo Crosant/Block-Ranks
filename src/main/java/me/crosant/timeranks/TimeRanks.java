@@ -177,7 +177,8 @@ public class TimeRanks extends JavaPlugin
         
         //this.getConfig().set("Basic.Permission", "yes");
     	this.getConfig().set("Messages.nopermission", "You don't have the required permissions to do this.");
-    	
+    	this.getConfig().set("Messages.rankup", "You are now a");
+  	
     	
     	
     	
