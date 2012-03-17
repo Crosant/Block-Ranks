@@ -39,13 +39,13 @@ public class TimeRanksBlockListener implements Listener{
                 
                 
             
-                int blocks;
+                long blocks;
                 Player player = event.getPlayer();
                 Block block = event.getBlock();
                 Material mat = block.getType();
                 //blocks = SQL.getBlocks(player.getName());
                 blocks = TimeRanks.player_blocks.get(player.getName());
-                int blocks1 = blocks + 1;
+                long blocks1 = blocks + 1;
                 //SQL.setBlocks(player.getName(), blocks1);
                 TimeRanks.player_blocks.put(player.getName(), blocks1);
                 
@@ -62,45 +62,45 @@ public class TimeRanksBlockListener implements Listener{
                   
               
                 
-                if (TimeRanks.player_blocks.get(player.getName()) == plugin.getConfig().getInt("Rank.6.blocks")){
+                if (TimeRanks.player_blocks.get(player.getName()).equals(plugin.getConfig().getLong("Rank.6.blocks"))){
                     
                     player.sendMessage(plugin.getConfig().getString("Messages.rankup") + " " + plugin.getConfig().getString("Rank.6.name"));
-                    plugin.giveCash(player.getName(), plugin.getConfig().getInt("Rank.6.money"));
+                    plugin.giveCash(player.getName(), plugin.getConfig().getLong("Rank.6.money"));
                   manager.getUser(player).addGroup(plugin.getConfig().getString("Rank.6.name"));  
                   if(manager.getUser(player).getGroupsNames().toString().contains(plugin.getConfig().getString("Rank.5.name")))manager.getUser(player).removeGroup(plugin.getConfig().getString("Rank.5.name"));   
                     
                 }
                 
-                else if (TimeRanks.player_blocks.get(player.getName()) == plugin.getConfig().getInt("Rank.5.blocks")){
+                else if (TimeRanks.player_blocks.get(player.getName()).equals(plugin.getConfig().getLong("Rank.5.blocks"))){
                     
                     player.sendMessage(plugin.getConfig().getString("Messages.rankup") + " " + plugin.getConfig().getString("Rank.5.name"));
-                    plugin.giveCash(player.getName(), plugin.getConfig().getInt("Rank.5.money"));
+                    plugin.giveCash(player.getName(), plugin.getConfig().getLong("Rank.5.money"));
                     manager.getUser(player).addGroup(plugin.getConfig().getString("Rank.5.name"));  
                  if(manager.getUser(player).getGroupsNames().toString().contains(plugin.getConfig().getString("Rank.4.name")))manager.getUser(player).removeGroup(plugin.getConfig().getString("Rank.4.name"));  
                 }
                                 
-                else if (TimeRanks.player_blocks.get(player.getName()) == plugin.getConfig().getInt("Rank.4.blocks")){
+                else if (TimeRanks.player_blocks.get(player.getName()).equals(plugin.getConfig().getLong("Rank.4.blocks"))){
                     
                     player.sendMessage(plugin.getConfig().getString("Messages.rankup") + " " + plugin.getConfig().getString("Rank.4.name"));
-                    plugin.giveCash(player.getName(), plugin.getConfig().getInt("Rank.4.money"));
+                    plugin.giveCash(player.getName(), plugin.getConfig().getLong("Rank.4.money"));
                     
                     manager.getUser(player).addGroup(plugin.getConfig().getString("Rank.4.name"));  
                  if(manager.getUser(player).getGroupsNames().toString().contains(plugin.getConfig().getString("Rank.3.name")))manager.getUser(player).removeGroup(plugin.getConfig().getString("Rank.3.name"));   
                 }
                                                 
-                else if (TimeRanks.player_blocks.get(player.getName()) == plugin.getConfig().getInt("Rank.3.blocks")){
+                else if (TimeRanks.player_blocks.get(player.getName()).equals(plugin.getConfig().getLong("Rank.3.blocks"))){
                     
                     player.sendMessage(plugin.getConfig().getString("Messages.rankup") + " " + plugin.getConfig().getString("Rank.3.name"));
-                    plugin.giveCash(player.getName(), plugin.getConfig().getInt("Rank.3.money"));
+                    plugin.giveCash(player.getName(), plugin.getConfig().getLong("Rank.3.money"));
                     
                     manager.getUser(player).addGroup(plugin.getConfig().getString("Rank.3.name"));  
                   if(manager.getUser(player).getGroupsNames().toString().contains(plugin.getConfig().getString("Rank.2.name")))manager.getUser(player).removeGroup(plugin.getConfig().getString("Rank.2.name"));   
                 }
                                                                 
-                else if (TimeRanks.player_blocks.get(player.getName()) == plugin.getConfig().getInt("Rank.2.blocks")){
+                else if (TimeRanks.player_blocks.get(player.getName()).equals(plugin.getConfig().getLong("Rank.2.blocks"))){
                     
                     player.sendMessage(plugin.getConfig().getString("Messages.rankup") + " " + plugin.getConfig().getString("Rank.2.name"));
-                    plugin.giveCash(player.getName(), plugin.getConfig().getInt("Rank.2.money"));
+                    plugin.giveCash(player.getName(), plugin.getConfig().getLong("Rank.2.money"));
                     
                     manager.getUser(player).addGroup(plugin.getConfig().getString("Rank.2.name"));
                     
@@ -108,18 +108,22 @@ public class TimeRanksBlockListener implements Listener{
                   
                 }
                                                                                 
-                else if (TimeRanks.player_blocks.get(player.getName()) == plugin.getConfig().getInt("Rank.1.blocks")){
+                else if (TimeRanks.player_blocks.get(player.getName()).equals(plugin.getConfig().getLong("Rank.1.blocks"))){
                     
                     player.sendMessage(plugin.getConfig().getString("Messages.rankup") + " " + plugin.getConfig().getString("Rank.1.name"));
-                    plugin.giveCash(player.getName(), plugin.getConfig().getInt("Rank.1.money"));
+                    plugin.giveCash(player.getName(), plugin.getConfig().getLong("Rank.1.money"));
                     
                     manager.getUser(player).addGroup(plugin.getConfig().getString("Rank.1.name"));  
  
                 }
                                                                                                 
                 else{
-                    
+                    System.out.println(                TimeRanks.player_blocks.get(player.getName()) + " " + plugin.getConfig().getLong("Rank.6.blocks"));
+
                 }
+              }
+              else{
+                  System.out.println("deaktiviert");
               }
               }
               else {

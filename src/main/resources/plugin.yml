@@ -5,4 +5,11 @@ commands:
     Ranks:
           description: TimeRanks
           usage: /<command> arg
+permissions:
+  TimeRanks.*:
+    description: Gives access to all TimeRanks commands
+    children:
+      TimeRanks.reload: true
+  TimeRanks.reload:
+     description: TimeRanks Reload
 depend: [Vault]

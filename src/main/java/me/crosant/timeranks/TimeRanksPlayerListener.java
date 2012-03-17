@@ -78,7 +78,7 @@ public class TimeRanksPlayerListener implements Listener{
             else{
                 
                 st.executeUpdate( "INSERT INTO timeranks (player, blocks) values ('" + player.getName() + "', 0)");
-                TimeRanks.player_blocks.put(player.getName(), 0);
+                TimeRanks.player_blocks.put(player.getName(), Long.valueOf(0));
 
             }
         } catch (SQLException sqle) {

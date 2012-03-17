@@ -8,6 +8,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.milkbowl.vault.economy.*;
 import net.milkbowl.vault.*;
+import net.milkbowl.vault.permission.Permission;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.Event;
 import org.bukkit.plugin.PluginManager;
@@ -22,7 +23,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class TimeRanks extends JavaPlugin 
 {
-    
+    public static Permission perms = null;
         public static String username;
 	public static String password;
 	public static String db;
@@ -30,7 +31,7 @@ public class TimeRanks extends JavaPlugin
         public static String port;
         public static Economy economy = null;
 
-        public static Map<String, Integer> player_blocks = new HashMap<String, Integer>();
+        public static Map<String, Long> player_blocks = new HashMap<String, Long>();
         
         private static Vault vault = null;
 
@@ -105,7 +106,7 @@ public class TimeRanks extends JavaPlugin
                 
                 
                 
-            int blocks = rs.getInt("blocks"); // Alternativ: result.getString(1);
+            Long blocks = rs.getLong("blocks"); // Alternativ: result.getString(1);
             String playername1 = rs.getString("player");
             
             player_blocks.put(playername1, blocks);
@@ -160,12 +161,12 @@ public class TimeRanks extends JavaPlugin
         this.getConfig().set("Rank.4.name", "Rank4");
         this.getConfig().set("Rank.5.name", "Rank5");
         this.getConfig().set("Rank.6.name", "Rank6");
-        this.getConfig().set("Rank.1.blocks", "1");
-        this.getConfig().set("Rank.2.blocks", "5");
-        this.getConfig().set("Rank.3.blocks", "10");
-        this.getConfig().set("Rank.4.blocks", "20");
-        this.getConfig().set("Rank.5.blocks", "50");
-        this.getConfig().set("Rank.6.blocks", "100");
+        this.getConfig().set("Rank.1.blocks", 1);
+        this.getConfig().set("Rank.2.blocks", 5);
+        this.getConfig().set("Rank.3.blocks", 10);
+        this.getConfig().set("Rank.4.blocks", 20);
+        this.getConfig().set("Rank.5.blocks", 50);
+        this.getConfig().set("Rank.6.blocks", 100);
         this.getConfig().set("Rank.1.money", 1);
         this.getConfig().set("Rank.2.money", 5);
         this.getConfig().set("Rank.3.money", 10);
@@ -178,6 +179,7 @@ public class TimeRanks extends JavaPlugin
         //this.getConfig().set("Basic.Permission", "yes");
     	this.getConfig().set("Messages.nopermission", "You don't have the required permissions to do this.");
     	this.getConfig().set("Messages.rankup", "You are now a");
+    	this.getConfig().set("Messages.blocks", "You have set");
   	
     	
     	
@@ -206,6 +208,7 @@ public class TimeRanks extends JavaPlugin
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
+        setupPermissions();
 		log.info(String.format("[%s] Enabled Version %s", getDescription().getName(), getDescription().getVersion()));
     	
                 
@@ -230,9 +233,9 @@ public class TimeRanks extends JavaPlugin
              
              if (args.length > 0){
                  if (args[0].equalsIgnoreCase("blocks")){
-                    int Blocks1 = SQL.getBlocks(player.getName());
+                    Long Blocks1 = player_blocks.get(player.getName());
                     String Blocks = String.valueOf(Blocks1);
-                    player.sendMessage("You have set " +Blocks + " Blocks");
+                    player.sendMessage(this.getConfig().getString("Messages.blocks") + " " +Blocks + " Blocks");
                     return true;
                  }
              
@@ -297,6 +300,12 @@ public class TimeRanks extends JavaPlugin
         
         
     }
+                 
+                 else if (args[0].equalsIgnoreCase("reload") && perms.has(player, "TimeRanks.reload")){
+                     
+                     this.reloadConfig();
+                     
+                 }
                      
                  }
                  
@@ -308,6 +317,13 @@ public class TimeRanks extends JavaPlugin
      return true;
     }
 
+        private boolean setupPermissions() {
+        RegisteredServiceProvider<Permission> rsp = getServer().getServicesManager().getRegistration(Permission.class);
+        perms = rsp.getProvider();
+        return perms != null;
+    }
+
+    
     private boolean setupEconomy() {
         if (getServer().getPluginManager().getPlugin("Vault") == null) {
             return false;
@@ -320,7 +336,7 @@ public class TimeRanks extends JavaPlugin
         return economy != null;
     }
     
-    public boolean giveCash(String player,int amount){
+    public boolean giveCash(String player,Long amount){
         
         economy.depositPlayer(player, amount);       
         return false;

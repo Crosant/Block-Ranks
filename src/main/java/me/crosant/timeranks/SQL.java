@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
  */
 public class SQL {
      public static String blocks; 
-    public static int getBlocks(String player) {
+    public static Long getBlocks(String player) {
         Connection conn = null;
         Statement  st = null;
         ResultSet  rs = null;
@@ -62,11 +62,11 @@ public class SQL {
         } catch (SQLException ex) {
             System.out.println("Query ist fehlgeschlagen: " + ex.getMessage());
         }
-        return Integer.parseInt(blocks);
+        return Long.valueOf(blocks);
         
     }
     
-        public static void setBlocks(String player, int Blocks){
+        public static void setBlocks(String player, Long Blocks){
         Connection conn = null;
         Statement  st = null;
         ResultSet  rs = null;
