@@ -25,13 +25,20 @@ import ru.tehkode.permissions.bukkit.PermissionsEx;
 public class TimeRanksBlockListener implements Listener{
 
     
-    public static TimeRanks plugin;
+    private final TimeRanks plugin;
+
+    TimeRanksBlockListener(TimeRanks p) {
+        plugin = p;
+    }
     
     
     
     
         @EventHandler
             public void onBlockPlace(BlockPlaceEvent event){
+                
+                
+            
                 int blocks;
                 Player player = event.getPlayer();
                 Block block = event.getBlock();
@@ -55,7 +62,7 @@ public class TimeRanksBlockListener implements Listener{
                   
               
                 
-                if (TimeRanks.player_blocks.get(player.getName()) > plugin.getConfig().getInt("Rank.6.blocks")){
+                if (TimeRanks.player_blocks.get(player.getName()) == plugin.getConfig().getInt("Rank.6.blocks")){
                     
                     player.sendMessage("You are now a " + plugin.getConfig().getString("Rank.6.name"));
                     plugin.giveCash(player.getName(), plugin.getConfig().getInt("Rank.6.money"));

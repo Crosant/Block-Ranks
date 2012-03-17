@@ -14,6 +14,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -125,10 +126,10 @@ public class TimeRanks extends JavaPlugin
     
         
         
-            
             PluginManager pm = this.getServer().getPluginManager();
             
-            pm.registerEvents(new TimeRanksBlockListener(), this);
+            
+            pm.registerEvents(new TimeRanksBlockListener(this), this);
             pm.registerEvents(new TimeRanksPlayerListener(), this);
             
             
