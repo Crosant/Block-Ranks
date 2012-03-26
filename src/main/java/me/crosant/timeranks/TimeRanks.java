@@ -180,7 +180,7 @@ public class TimeRanks extends JavaPlugin
         //this.getConfig().set("Basic.Permission", "yes");
     	this.getConfig().set("Messanges.nopermission", "You don't have the required permissions to do this.");
     	this.getConfig().set("Messanges.rankup", "You are now a %rank%");
-    	this.getConfig().set("Messanges.blocks", "You have set %blocks%");
+    	this.getConfig().set("Messanges.blocks", "You have set %blocks% blocks");
         this.getConfig().set("Messanges.reloadstart", "Started");
         this.getConfig().set("Messanges.reloadend", "Finished");
         this.getConfig().set("Messanges.top5", " %player% mit %blocks%");
