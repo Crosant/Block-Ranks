@@ -350,9 +350,10 @@ public class TimeRanks extends JavaPlugin
     }
     
     public boolean giveCash(Player player,Long amount){
+        
         player.sendMessage(this.getConfig().getString("Messanges.money").replace("%money%", amount.toString()));
         economy.depositPlayer(player.getName(), amount);       
-        return false;
+        return true;
         
     }
 }

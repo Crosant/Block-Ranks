@@ -60,22 +60,26 @@ public class TimeRanksBlockListener implements Listener{
               
               if(plugin.getConfig().getBoolean("Basic.activated") == true){
                   
-              for(int i = 0; i <=25; i++){
-                  
+              for(int i = 1; i <=25; i++){
+                  //System.out.println(plugin.getConfig().getString("Rank."+ i +".name"));
                   if(plugin.getConfig().getString("Rank."+ i +".name") != null){
                       if (i > 1){
+                        //  System.out.println(plugin.getConfig().getString("Rank."+ i +".name"));
+                             //                 System.out.println(plugin.getConfig().getString("Messanges.rankup").replace("%rank%", plugin.getConfig().getString("Rank." + i + ".name")));
+
                       if (TimeRanks.player_blocks.get(player.getName()).equals(plugin.getConfig().getLong("Rank." + i + ".blocks"))){
-                    
-                    player.sendMessage(plugin.getConfig().getString("Messages.rankup").replace("%rank%", plugin.getConfig().getString("Rank." + i + ".name")) );
+                 //   System.out.println(plugin.getConfig().getString("Messanges.rankup").replace("%rank%", plugin.getConfig().getString("Rank." + i + ".name")));
+                    player.sendMessage(plugin.getConfig().getString("Messanges.rankup").replace("%rank%", plugin.getConfig().getString("Rank." + i + ".name")) );
                     plugin.giveCash(player, plugin.getConfig().getLong("Rank." + i + ".money"));
                   manager.getUser(player).addGroup(plugin.getConfig().getString("Rank." + i + ".name"));  
                   int o = i-1;
                   if(manager.getUser(player).getGroupsNames().toString().contains(plugin.getConfig().getString("Rank." + o + ".name")))manager.getUser(player).removeGroup(plugin.getConfig().getString("Rank."+ o + ".name"));   
                       }
+                      }
                       else {
-                                                if (TimeRanks.player_blocks.get(player.getName()).equals(plugin.getConfig().getLong("Rank." + i + ".blocks"))){
+                     if (TimeRanks.player_blocks.get(player.getName()).equals(plugin.getConfig().getLong("Rank." + i + ".blocks"))){
                     
-                    player.sendMessage(plugin.getConfig().getString("Messages.rankup").replace("%rank%", plugin.getConfig().getString("Rank." + i + ".name")) );
+                    player.sendMessage(plugin.getConfig().getString("Messanges.rankup").replace("%rank%", plugin.getConfig().getString("Rank." + i + ".name")) );
                     plugin.giveCash(player, plugin.getConfig().getLong("Rank." + i + ".money"));
                   manager.getUser(player).addGroup(plugin.getConfig().getString("Rank." + i + ".name")); 
                                                 }
@@ -83,7 +87,7 @@ public class TimeRanksBlockListener implements Listener{
                 }
                   }
                   
-              }
+              
                 
 
               }
