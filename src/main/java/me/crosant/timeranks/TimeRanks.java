@@ -183,7 +183,7 @@ public class TimeRanks extends JavaPlugin
     	this.getConfig().set("Messanges.blocks", "You have set %blocks%");
         this.getConfig().set("Messanges.reloadstart", "Started");
         this.getConfig().set("Messanges.reloadend", "Finished");
-        this.getConfig().set("Messanges.top5", "player mit %blocks%");
+        this.getConfig().set("Messanges.top5", " %player% mit %blocks%");
         this.getConfig().set("Messanges.money", "You have get %money%");
         
   	
@@ -241,7 +241,7 @@ public class TimeRanks extends JavaPlugin
                  if (args[0].equalsIgnoreCase("blocks")){
                     Long Blocks1 = player_blocks.get(player.getName());
                     String Blocks = String.valueOf(Blocks1);
-                    player.sendMessage(this.getConfig().getString("Messages.blocks") + " " +Blocks + " Blocks");
+                    player.sendMessage(this.getConfig().getString("Messanges.blocks") + " " +Blocks + " Blocks");
                     return true;
                  }
              
@@ -317,7 +317,7 @@ public class TimeRanks extends JavaPlugin
                      Bukkit.getServer().broadcastMessage("[TimeRanks] " + this.getConfig().getString("Messanges.reloadend"));
                      }
                      else
-                         player.sendMessage(this.getConfig().getString("Messages.nopermission"));
+                         player.sendMessage(this.getConfig().getString("Messanges.nopermission"));
                  }
                      
                  }
