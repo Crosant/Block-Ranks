@@ -178,10 +178,10 @@ public class TimeRanks extends JavaPlugin
         
         
         //this.getConfig().set("Basic.Permission", "yes");
-    	this.getConfig().set("Messages.nopermission", "You don't have the required permissions to do this.");
-    	this.getConfig().set("Messages.rankup", "You are now a");
-    	this.getConfig().set("Messages.blocks", "You have set");
-        this.getConfig().getString("Messanges.reloadstart", "Started");
+    	this.getConfig().set("Messanges.nopermission", "You don't have the required permissions to do this.");
+    	this.getConfig().set("Messanges.rankup", "You are now a");
+    	this.getConfig().set("Messanges.blocks", "You have set");
+        this.getConfig().set("Messanges.reloadstart", "Started");
         this.getConfig().set("Messanges.reloadend", "Finished");
         
   	
