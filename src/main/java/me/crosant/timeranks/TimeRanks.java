@@ -248,6 +248,13 @@ public class TimeRanks extends JavaPlugin
              
                  
                  else if (args[0].equalsIgnoreCase("top5")){
+                     
+                     for(Player player1 : getServer().getOnlinePlayers()) 
+        { 
+        SQL.setBlocks(player1.getName(), TimeRanks.player_blocks.get(player.getName()));
+        }
+                     
+                     
                              Connection conn = null;
         Statement  st = null;
         ResultSet  rs = null;
@@ -309,7 +316,10 @@ public class TimeRanks extends JavaPlugin
                  
                  else if (args[0].equalsIgnoreCase("reload")){
                      if (perms.has(player, "TimeRanks.reload")){
-                     
+                     for(Player player1 : getServer().getOnlinePlayers()) 
+        { 
+        SQL.setBlocks(player1.getName(), TimeRanks.player_blocks.get(player.getName()));
+        }
                      Bukkit.getServer().broadcastMessage("[TimeRanks] "+ this.getConfig().getString("Messanges.reloadstart"));
                      
                      this.reloadConfig();
