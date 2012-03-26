@@ -241,7 +241,7 @@ public class TimeRanks extends JavaPlugin
                  if (args[0].equalsIgnoreCase("blocks")){
                     Long Blocks1 = player_blocks.get(player.getName());
                     String Blocks = String.valueOf(Blocks1);
-                    player.sendMessage(this.getConfig().getString("Messanges.blocks") + " " +Blocks + " Blocks");
+                    player.sendMessage(this.getConfig().getString("Messanges.blocks").replace("%blocks", Blocks));
                     return true;
                  }
              
