@@ -179,10 +179,12 @@ public class TimeRanks extends JavaPlugin
         
         //this.getConfig().set("Basic.Permission", "yes");
     	this.getConfig().set("Messanges.nopermission", "You don't have the required permissions to do this.");
-    	this.getConfig().set("Messanges.rankup", "You are now a");
-    	this.getConfig().set("Messanges.blocks", "You have set");
+    	this.getConfig().set("Messanges.rankup", "You are now a %rank%");
+    	this.getConfig().set("Messanges.blocks", "You have set %blocks%");
         this.getConfig().set("Messanges.reloadstart", "Started");
         this.getConfig().set("Messanges.reloadend", "Finished");
+        this.getConfig().set("Messanges.top5", "player mit %blocks%");
+        this.getConfig().set("Messanges.money", "You have get %money%");
         
   	
     	
@@ -286,7 +288,7 @@ public class TimeRanks extends JavaPlugin
                        String playername = rs.getString("player"); // Alternativ: result.getString(1);
                        String blocks = rs.getString("blocks");
                        
-                       player.sendMessage(i + ". " + playername + " with " + blocks + " blocks");
+                       player.sendMessage(i + ". " + this.getConfig().getString("Messanges.top5").replace("%player%", playername).replace("%blocks%", blocks));
                        
                     //    conn.close();
             }
@@ -347,9 +349,9 @@ public class TimeRanks extends JavaPlugin
         return economy != null;
     }
     
-    public boolean giveCash(String player,Long amount){
-        
-        economy.depositPlayer(player, amount);       
+    public boolean giveCash(Player player,Long amount){
+        player.sendMessage(this.getConfig().getString("Messanges.money").replace("%money%", amount.toString()));
+        economy.depositPlayer(player.getName(), amount);       
         return false;
         
     }
