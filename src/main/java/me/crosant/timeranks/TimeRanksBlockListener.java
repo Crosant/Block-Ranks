@@ -77,10 +77,12 @@ public class TimeRanksBlockListener implements Listener{
                     player.sendMessage(plugin.getConfig().getString("Messanges.rankup").replace("%rank%", plugin.getConfig().getString("Rank." + i + ".name")) );
                     plugin.giveCash(player, plugin.getConfig().getLong("Rank." + i + ".money"));
                     
-                    
+                    for (int n = 0; n<groups.length; n++){
+                    manager.getUser(player).removeGroup(groups[n]);
+                    }
                     
                     groups[groups.length + 1] = plugin.getConfig().getString("Rank." + i + ".name");
-                    
+
                   manager.getUser(player).setGroups(groups);  
                   int o = i-1;
                   if(manager.getUser(player).getGroupsNames().toString().contains(plugin.getConfig().getString("Rank." + o + ".name")))manager.getUser(player).removeGroup(plugin.getConfig().getString("Rank."+ o + ".name"));   
@@ -91,8 +93,11 @@ public class TimeRanksBlockListener implements Listener{
                     
                     player.sendMessage(plugin.getConfig().getString("Messanges.rankup").replace("%rank%", plugin.getConfig().getString("Rank." + i + ".name")) );
                     plugin.giveCash(player, plugin.getConfig().getLong("Rank." + i + ".money"));
+                                        for (int n = 0; n<groups.length; n++){
+                    manager.getUser(player).removeGroup(groups[n]);
+                    }
                                       groups[groups.length + 1] = plugin.getConfig().getString("Rank." + i + ".name");
-                    
+
                   manager.getUser(player).setGroups(groups);   
                                                 }
                       }
