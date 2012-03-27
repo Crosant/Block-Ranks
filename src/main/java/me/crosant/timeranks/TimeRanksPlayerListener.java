@@ -7,6 +7,7 @@ package me.crosant.timeranks;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -73,13 +74,13 @@ public class TimeRanksPlayerListener implements Listener{
        // System.out.println("!!!!!!!!!!!!!!!!!                          " + playername);
         try {
             if(playername != null){
-                
+               // System.out.println(playername);
             }
             else{
                 
                 st.executeUpdate( "INSERT INTO timeranks (player, blocks) values ('" + player.getName() + "', 0)");
-                TimeRanks.player_blocks.put(player.getName(), Long.valueOf(0));
-
+                TimeRanks.player_blocks.put(player.getName(), Long.valueOf("0"));
+                Bukkit.getServer().broadcastMessage(plugin.getConfig().getString("Messanges.register").replace("%player%", player.getName()));
             }
         } catch (SQLException sqle) {
             System.out.println("Query ist fehlgeschlagen: " + sqle.getMessage());

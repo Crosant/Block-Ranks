@@ -37,17 +37,19 @@ public class TimeRanksBlockListener implements Listener{
         @EventHandler
             public void onBlockPlace(BlockPlaceEvent event){
                 
-                
-            
+                if(plugin.getConfig().getBoolean("Basic.activated") == true){
+                    
                 long blocks;
                 Player player = event.getPlayer();
                 Block block = event.getBlock();
                 Material mat = block.getType();
                 //blocks = SQL.getBlocks(player);
                 blocks = TimeRanks.player_blocks.get(player.getName());
+
                 long blocks1 = blocks + 1;
                 //SQL.setBlocks(player, blocks1);
                 TimeRanks.player_blocks.put(player.getName(), blocks1);
+                
                 
                // player.sendMessage(TimeRanks.player_blocks.get(player).toString());
                 
@@ -56,22 +58,30 @@ public class TimeRanksBlockListener implements Listener{
 
               PermissionManager pex = PermissionsEx.getPermissionManager();
               PermissionEntity entity = pex.getUser(player);
-              
-              
-              if(plugin.getConfig().getBoolean("Basic.activated") == true){
-                  
+              String[] groups =  manager.getUser(player).getGroupsNames();
+           /*   int p = 0;
+              while (groups.length > p){
+              System.out.println(player.getName() + "        !!!!!!!!!!!           " + groups[p]);
+              p++;
+              }*/
               for(int i = 1; i <=25; i++){
-                  //System.out.println(plugin.getConfig().getString("Rank."+ i +".name"));
+                 // System.out.println(plugin.getConfig().getString("Rank."+ i +".name"));
                   if(plugin.getConfig().getString("Rank."+ i +".name") != null){
+                      //System.out.println(plugin.getConfig().getString("Rank."+ i +".name"));
                       if (i > 1){
-                        //  System.out.println(plugin.getConfig().getString("Rank."+ i +".name"));
+                          //System.out.println(plugin.getConfig().getString("Rank."+ i +".name"));
                              //                 System.out.println(plugin.getConfig().getString("Messanges.rankup").replace("%rank%", plugin.getConfig().getString("Rank." + i + ".name")));
-
+                          
                       if (TimeRanks.player_blocks.get(player.getName()).equals(plugin.getConfig().getLong("Rank." + i + ".blocks"))){
                  //   System.out.println(plugin.getConfig().getString("Messanges.rankup").replace("%rank%", plugin.getConfig().getString("Rank." + i + ".name")));
                     player.sendMessage(plugin.getConfig().getString("Messanges.rankup").replace("%rank%", plugin.getConfig().getString("Rank." + i + ".name")) );
                     plugin.giveCash(player, plugin.getConfig().getLong("Rank." + i + ".money"));
-                  manager.getUser(player).addGroup(plugin.getConfig().getString("Rank." + i + ".name"));  
+                    
+                    
+                    
+                    groups[groups.length + 1] = plugin.getConfig().getString("Rank." + i + ".name");
+                    
+                  manager.getUser(player).setGroups(groups);  
                   int o = i-1;
                   if(manager.getUser(player).getGroupsNames().toString().contains(plugin.getConfig().getString("Rank." + o + ".name")))manager.getUser(player).removeGroup(plugin.getConfig().getString("Rank."+ o + ".name"));   
                       }
@@ -81,7 +91,9 @@ public class TimeRanksBlockListener implements Listener{
                     
                     player.sendMessage(plugin.getConfig().getString("Messanges.rankup").replace("%rank%", plugin.getConfig().getString("Rank." + i + ".name")) );
                     plugin.giveCash(player, plugin.getConfig().getLong("Rank." + i + ".money"));
-                  manager.getUser(player).addGroup(plugin.getConfig().getString("Rank." + i + ".name")); 
+                                      groups[groups.length + 1] = plugin.getConfig().getString("Rank." + i + ".name");
+                    
+                  manager.getUser(player).setGroups(groups);   
                                                 }
                       }
                 }

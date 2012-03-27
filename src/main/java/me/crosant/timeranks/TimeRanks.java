@@ -185,6 +185,7 @@ public class TimeRanks extends JavaPlugin
         this.getConfig().set("Messanges.reloadend", "Finished");
         this.getConfig().set("Messanges.top5", " %player% mit %blocks%");
         this.getConfig().set("Messanges.money", "You have get %money%");
+        this.getConfig().set("Messanges.register", "%player% is now registered to Timeranks");
         
   	
     	
