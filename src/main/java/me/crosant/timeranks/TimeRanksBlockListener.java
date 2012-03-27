@@ -82,11 +82,12 @@ public class TimeRanksBlockListener implements Listener{
                     }
                     
                     groups[groups.length + 1] = plugin.getConfig().getString("Rank." + i + ".name");
-
-                  manager.getUser(player).setGroups(groups);  
+                     for (int l = groups.length; l > 0; l--){
+                  manager.getUser(player).addGroup(groups[l]);
+                     }
                   int o = i-1;
-                  if(manager.getUser(player).getGroupsNames().toString().contains(plugin.getConfig().getString("Rank." + o + ".name")))manager.getUser(player).removeGroup(plugin.getConfig().getString("Rank."+ o + ".name"));   
-                      }
+                 manager.getUser(player).removeGroup(plugin.getConfig().getString("Rank."+ o + ".name"));   
+                      
                       }
                       else {
                      if (TimeRanks.player_blocks.get(player.getName()).equals(plugin.getConfig().getLong("Rank." + i + ".blocks"))){
@@ -98,8 +99,9 @@ public class TimeRanksBlockListener implements Listener{
                     }
                                       groups[groups.length + 1] = plugin.getConfig().getString("Rank." + i + ".name");
 
-                  manager.getUser(player).setGroups(groups);   
-                                                }
+                     for (int l = groups.length; l > 0; l--){
+                  manager.getUser(player).addGroup(groups[l]);
+                     }                                                }
                       }
                 }
                   }
@@ -108,7 +110,7 @@ public class TimeRanksBlockListener implements Listener{
                 
 
               }
-              else{
+              
                   
               }
               }
