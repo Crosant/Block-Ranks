@@ -80,7 +80,7 @@ public class TimeRanksPlayerListener implements Listener{
                 
                 st.executeUpdate( "INSERT INTO timeranks (player, blocks) values ('" + player.getName() + "', 0)");
                 TimeRanks.player_blocks.put(player.getName(), Long.valueOf("0"));
-                Bukkit.getServer().broadcastMessage(plugin.getConfig().getString("Messanges.register").replace("%player%", player.getName()));
+                //Bukkit.getServer().broadcastMessage(plugin.getConfig().getString("Messanges.register").replace("%player%", player.getName()));
             }
         } catch (SQLException sqle) {
             System.out.println("Query ist fehlgeschlagen: " + sqle.getMessage());
