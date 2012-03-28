@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package me.crosant.timeranks;
+package me.crosant.blockranks;
 
 import java.util.logging.Logger;
 import net.milkbowl.vault.Vault;
@@ -22,12 +22,12 @@ import ru.tehkode.permissions.bukkit.PermissionsEx;
  *
  * @author Florian
  */
-public class TimeRanksBlockListener implements Listener{
+public class BlockRanksBlockListener implements Listener{
 
     
-    private final TimeRanks plugin;
+    private final BlockRanks plugin;
 
-    TimeRanksBlockListener(TimeRanks p) {
+    BlockRanksBlockListener(BlockRanks p) {
         plugin = p;
     }
     
@@ -44,14 +44,14 @@ public class TimeRanksBlockListener implements Listener{
                 Block block = event.getBlock();
                 Material mat = block.getType();
                 //blocks = SQL.getBlocks(player);
-                blocks = TimeRanks.player_blocks.get(player.getName());
+                blocks = BlockRanks.player_blocks.get(player.getName());
 
                 long blocks1 = blocks + 1;
                 //SQL.setBlocks(player, blocks1);
-                TimeRanks.player_blocks.put(player.getName(), blocks1);
+                BlockRanks.player_blocks.put(player.getName(), blocks1);
                 
                 
-               // player.sendMessage(TimeRanks.player_blocks.get(player).toString());
+               // player.sendMessage(BlockRanks.player_blocks.get(player).toString());
                 
               if(Bukkit.getServer().getPluginManager().isPluginEnabled("PermissionsEx")){
               PermissionManager manager = PermissionsEx.getPermissionManager();
@@ -72,7 +72,7 @@ public class TimeRanksBlockListener implements Listener{
                           //System.out.println(plugin.getConfig().getString("Rank."+ i +".name"));
                              //                 System.out.println(plugin.getConfig().getString("Messanges.rankup").replace("%rank%", plugin.getConfig().getString("Rank." + i + ".name")));
                           
-                      if (TimeRanks.player_blocks.get(player.getName()).equals(plugin.getConfig().getLong("Rank." + i + ".blocks"))){
+                      if (BlockRanks.player_blocks.get(player.getName()).equals(plugin.getConfig().getLong("Rank." + i + ".blocks"))){
                  //   System.out.println(plugin.getConfig().getString("Messanges.rankup").replace("%rank%", plugin.getConfig().getString("Rank." + i + ".name")));
                     player.sendMessage(plugin.getConfig().getString("Messanges.rankup").replace("%rank%", plugin.getConfig().getString("Rank." + i + ".name")) );
                     plugin.giveCash(player, plugin.getConfig().getLong("Rank." + i + ".money"));
@@ -95,7 +95,7 @@ public class TimeRanksBlockListener implements Listener{
                       
                       }
                       else {
-                     if (TimeRanks.player_blocks.get(player.getName()).equals(plugin.getConfig().getLong("Rank." + i + ".blocks"))){
+                     if (BlockRanks.player_blocks.get(player.getName()).equals(plugin.getConfig().getLong("Rank." + i + ".blocks"))){
                     
                     player.sendMessage(plugin.getConfig().getString("Messanges.rankup").replace("%rank%", plugin.getConfig().getString("Rank." + i + ".name")) );
                     plugin.giveCash(player, plugin.getConfig().getLong("Rank." + i + ".money"));

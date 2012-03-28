@@ -1,15 +1,15 @@
-name: TimeRanks
-main: me.crosant.timeranks.TimeRanks
+name: BlockRanks
+main: me.crosant.blockranks.BlockRanks
 version: 0.0.1
 commands:
     Ranks:
-          description: TimeRanks
+          description: BlockRanks
           usage: /<command> arg
 permissions:
-  TimeRanks.*:
-    description: Gives access to all TimeRanks commands
+  BlockRanks.*:
+    description: Gives access to all BlockRanks commands
     children:
-      TimeRanks.reload: true
-  TimeRanks.reload:
-     description: TimeRanks Reload
+      BlockRanks.reload: true
+  BlockRanks.reload:
+     description: BlockRanks Reload
 depend: [Vault]

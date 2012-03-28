@@ -1,9 +1,8 @@
-package me.crosant.timeranks;
+package me.crosant.blockranks;
 
 import java.io.File;
 import java.sql.*;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.milkbowl.vault.economy.*;
@@ -22,7 +21,7 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 
-public class TimeRanks extends JavaPlugin 
+public class BlockRanks extends JavaPlugin 
 {
     public static Permission perms = null;
         public static String username;
@@ -43,9 +42,14 @@ public class TimeRanks extends JavaPlugin
     @Override
    public void onDisable() {
         
-        for(Player player : getServer().getOnlinePlayers()) 
+        
+        List<Player> onlinePlayers = Arrays.asList(Bukkit.getServer().getOnlinePlayers());
+        Iterator<Player> iterator = onlinePlayers.iterator();
+        while(iterator.hasNext()) 
+        
         { 
-        me.crosant.timeranks.SQL.setBlocks(player.getName(), TimeRanks.player_blocks.get(player.getName()));
+            Player onlinePlayer = iterator.next();
+            me.crosant.blockranks.SQL.setBlocks(onlinePlayer.getName(), BlockRanks.player_blocks.get(onlinePlayer.getName()));
         }
         
             
@@ -65,7 +69,7 @@ public class TimeRanks extends JavaPlugin
                 Connection conn = null;
         Statement  st = null;
         ResultSet  rs = null;
-               boolean exists = (new File("plugins/TimeRanks/config.yml")).exists();	
+               boolean exists = (new File("plugins/BlockRanks/config.yml")).exists();	
             
             if (exists){
             
@@ -84,9 +88,9 @@ public class TimeRanks extends JavaPlugin
         { 
          
         
-         conn = DriverManager.getConnection("jdbc:mysql://" + TimeRanks.host + ":"
-                    + TimeRanks.port + "/" + TimeRanks.db + "?" + "user=" + TimeRanks.username + "&"
-                    + "password=" + TimeRanks.password);
+         conn = DriverManager.getConnection("jdbc:mysql://" + BlockRanks.host + ":"
+                    + BlockRanks.port + "/" + BlockRanks.db + "?" + "user=" + BlockRanks.username + "&"
+                    + "password=" + BlockRanks.password);
                  } 
         catch(SQLException sqle) 
         { 
@@ -95,7 +99,7 @@ public class TimeRanks extends JavaPlugin
         try
         {
            st = conn.createStatement();
-           rs = st.executeQuery( "select * from timeranks");
+           rs = st.executeQuery( "select * from BlockRanks");
         }
         catch(SQLException sqle){
             
@@ -131,8 +135,8 @@ public class TimeRanks extends JavaPlugin
             PluginManager pm = this.getServer().getPluginManager();
             
             
-            pm.registerEvents(new TimeRanksBlockListener(this), this);
-            pm.registerEvents(new TimeRanksPlayerListener(), this);
+            pm.registerEvents(new BlockRanksBlockListener(this), this);
+            pm.registerEvents(new BlockRanksPlayerListener(), this);
             
             
             
@@ -185,7 +189,7 @@ public class TimeRanks extends JavaPlugin
         this.getConfig().set("Messanges.reloadend", "Finished");
         this.getConfig().set("Messanges.top5", " %player% mit %blocks%");
         this.getConfig().set("Messanges.money", "You have get %money%");
-        //this.getConfig().set("Messanges.register", "%player% is now registered to Timeranks");
+        //this.getConfig().set("Messanges.register", "%player% is now registered to BlockRanks");
         
   	
     	
@@ -250,9 +254,13 @@ public class TimeRanks extends JavaPlugin
                  
                  else if (args[0].equalsIgnoreCase("top5")){
                      
-                     for(Player player1 : getServer().getOnlinePlayers()) 
+                          List<Player> onlinePlayers = Arrays.asList(Bukkit.getServer().getOnlinePlayers());
+        Iterator<Player> iterator = onlinePlayers.iterator();
+        while(iterator.hasNext()) 
+        
         { 
-        SQL.setBlocks(player1.getName(), TimeRanks.player_blocks.get(player.getName()));
+            Player onlinePlayer = iterator.next();
+            me.crosant.blockranks.SQL.setBlocks(onlinePlayer.getName(), BlockRanks.player_blocks.get(onlinePlayer.getName()));
         }
                      
                      
@@ -272,9 +280,9 @@ public class TimeRanks extends JavaPlugin
         { 
          
         
-         conn = DriverManager.getConnection("jdbc:mysql://" + TimeRanks.host + ":"
-                    + TimeRanks.port + "/" + TimeRanks.db + "?" + "user=" + TimeRanks.username + "&"
-                    + "password=" + TimeRanks.password);
+         conn = DriverManager.getConnection("jdbc:mysql://" + BlockRanks.host + ":"
+                    + BlockRanks.port + "/" + BlockRanks.db + "?" + "user=" + BlockRanks.username + "&"
+                    + "password=" + BlockRanks.password);
                  } 
         catch(SQLException sqle) 
         { 
@@ -283,7 +291,7 @@ public class TimeRanks extends JavaPlugin
         try
         {
            st = conn.createStatement();
-           rs = st.executeQuery( "select * from timeranks ORDER BY blocks LIMIT 5");
+           rs = st.executeQuery( "select * from BlockRanks ORDER BY blocks DESC LIMIT 5");
         }
         catch(SQLException sqle){
                     System.out.println("Querry ist fehlgeschlagen: " + sqle.getMessage()); 
@@ -316,16 +324,16 @@ public class TimeRanks extends JavaPlugin
     }
                  
                  else if (args[0].equalsIgnoreCase("reload")){
-                     if (perms.has(player, "TimeRanks.reload")){
+                     if (perms.has(player, "BlockRanks.reload")){
                      for(Player player1 : getServer().getOnlinePlayers()) 
         { 
-        SQL.setBlocks(player1.getName(), TimeRanks.player_blocks.get(player.getName()));
+        SQL.setBlocks(player1.getName(), BlockRanks.player_blocks.get(player.getName()));
         }
-                     Bukkit.getServer().broadcastMessage("[TimeRanks] "+ this.getConfig().getString("Messanges.reloadstart"));
+                     Bukkit.getServer().broadcastMessage("[BlockRanks] "+ this.getConfig().getString("Messanges.reloadstart"));
                      
                      this.reloadConfig();
                      
-                     Bukkit.getServer().broadcastMessage("[TimeRanks] " + this.getConfig().getString("Messanges.reloadend"));
+                     Bukkit.getServer().broadcastMessage("[BlockRanks] " + this.getConfig().getString("Messanges.reloadend"));
                      }
                      else
                          player.sendMessage(this.getConfig().getString("Messanges.nopermission"));

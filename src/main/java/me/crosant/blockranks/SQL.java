@@ -1,4 +1,4 @@
-package me.crosant.timeranks;
+package me.crosant.blockranks;
 
 import java.net.*;
 import java.sql.*;
@@ -29,9 +29,9 @@ public class SQL {
         { 
          
         
-         conn = DriverManager.getConnection("jdbc:mysql://" + TimeRanks.host + ":"
-                    + TimeRanks.port + "/" + TimeRanks.db + "?" + "user=" + TimeRanks.username + "&"
-                    + "password=" + TimeRanks.password);
+         conn = DriverManager.getConnection("jdbc:mysql://" + BlockRanks.host + ":"
+                    + BlockRanks.port + "/" + BlockRanks.db + "?" + "user=" + BlockRanks.username + "&"
+                    + "password=" + BlockRanks.password);
                  } 
         catch(SQLException sqle) 
         { 
@@ -40,7 +40,7 @@ public class SQL {
         try
         {
            st = conn.createStatement();
-           rs = st.executeQuery( "select blocks from timeranks where player = '" + player + "'");
+           rs = st.executeQuery( "select blocks from BlockRanks where player = '" + player + "'");
         }
         catch(SQLException sqle){
             
@@ -81,7 +81,7 @@ public class SQL {
         
         try 
         { 
-         conn = DriverManager.getConnection("jdbc:mysql://" + TimeRanks.host + ":" + TimeRanks.port + "/" + TimeRanks.db, TimeRanks.username, TimeRanks.password); 
+         conn = DriverManager.getConnection("jdbc:mysql://" + BlockRanks.host + ":" + BlockRanks.port + "/" + BlockRanks.db, BlockRanks.username, BlockRanks.password); 
         } 
         catch(SQLException sqle) 
         { 
@@ -92,7 +92,7 @@ public class SQL {
            st = conn.createStatement();
           
            
-                 String query =   ( "UPDATE `timeranks` SET `blocks` = "+ Blocks +" WHERE `player` ='" + player + "'");
+                 String query =   ( "UPDATE `BlockRanks` SET `blocks` = "+ Blocks +" WHERE `player` ='" + player + "'");
                  
                  PreparedStatement preparedStmt = conn.prepareStatement(query);
                  

@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package me.crosant.timeranks;
+package me.crosant.blockranks;
 
 import java.sql.*;
 import java.util.logging.Level;
@@ -18,9 +18,9 @@ import org.bukkit.event.player.PlayerQuitEvent;
  *
  * @author Florian
  */
-public class TimeRanksPlayerListener implements Listener{
+public class BlockRanksPlayerListener implements Listener{
             public static String playername;
-            public static TimeRanks plugin;
+            public static BlockRanks plugin;
        
 
         @EventHandler
@@ -46,9 +46,9 @@ public class TimeRanksPlayerListener implements Listener{
         { 
          
         
-         conn = DriverManager.getConnection("jdbc:mysql://" + TimeRanks.host + ":"
-                    + TimeRanks.port + "/" + TimeRanks.db + "?" + "user=" + TimeRanks.username + "&"
-                    + "password=" + TimeRanks.password);
+         conn = DriverManager.getConnection("jdbc:mysql://" + BlockRanks.host + ":"
+                    + BlockRanks.port + "/" + BlockRanks.db + "?" + "user=" + BlockRanks.username + "&"
+                    + "password=" + BlockRanks.password);
                  } 
         catch(SQLException sqle) 
         { 
@@ -57,7 +57,7 @@ public class TimeRanksPlayerListener implements Listener{
         try
         {
            st = conn.createStatement();
-           rs = st.executeQuery( "select player from timeranks where player = '" + player.getName() + "'");
+           rs = st.executeQuery( "select player from BlockRanks where player = '" + player.getName() + "'");
         }
         catch(SQLException sqle){
             System.out.println("Query ist fehlgeschlagen: " + sqle.getMessage());
@@ -78,8 +78,8 @@ public class TimeRanksPlayerListener implements Listener{
             }
             else{
                 
-                st.executeUpdate( "INSERT INTO timeranks (player, blocks) values ('" + player.getName() + "', 0)");
-                TimeRanks.player_blocks.put(player.getName(), Long.valueOf("0"));
+                st.executeUpdate( "INSERT INTO BlockRanks (player, blocks) values ('" + player.getName() + "', 0)");
+                BlockRanks.player_blocks.put(player.getName(), Long.valueOf("0"));
                 //Bukkit.getServer().broadcastMessage(plugin.getConfig().getString("Messanges.register").replace("%player%", player.getName()));
             }
         } catch (SQLException sqle) {
@@ -102,9 +102,9 @@ public class TimeRanksPlayerListener implements Listener{
         
         String player = event.getPlayer().getName();
        
-        SQL.setBlocks(player, TimeRanks.player_blocks.get(player));
+        SQL.setBlocks(player, BlockRanks.player_blocks.get(player));
         
-        //System.out.println(player + "    " + TimeRanks.player_blocks.get(player));
+        //System.out.println(player + "    " + BlockRanks.player_blocks.get(player));
         
     }
         
