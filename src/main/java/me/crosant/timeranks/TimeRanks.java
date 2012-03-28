@@ -45,7 +45,7 @@ public class TimeRanks extends JavaPlugin
         
         for(Player player : getServer().getOnlinePlayers()) 
         { 
-        SQL.setBlocks(player.getName(), TimeRanks.player_blocks.get(player.getName()));
+        me.crosant.timeranks.SQL.setBlocks(player.getName(), TimeRanks.player_blocks.get(player.getName()));
         }
         
             
