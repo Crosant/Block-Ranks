@@ -103,6 +103,18 @@ public class BlockRanks extends JavaPlugin
         try
         {
            st = conn.createStatement();
+           String query =   ( "CREATE TABLE IF NOT EXISTS `blockranks` ("
+  + "`id` int(10) NOT NULL AUTO_INCREMENT,"
+  +"`player` varchar(100) NOT NULL,"
+  +"`blocks` int(255) NOT NULL,"
+  +"PRIMARY KEY (`id`),"
+  +"UNIQUE KEY `player` (`player`)"
++") ");
+                 
+                 PreparedStatement preparedStmt = conn.prepareStatement(query);
+                 
+                 preparedStmt.executeUpdate();
+           
            rs = st.executeQuery( "select * from BlockRanks");
         }
         catch(SQLException sqle){
