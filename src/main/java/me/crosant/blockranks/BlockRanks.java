@@ -377,7 +377,7 @@ public class BlockRanks extends JavaPlugin
           
            
                  String query =   ( "UPDATE `BlockRanks` SET `blocks` = 0 WHERE 1");
-                 
+                 BlockRanks.player_blocks.clear();
                  PreparedStatement preparedStmt = conn.prepareStatement(query);
                  
                  preparedStmt.executeUpdate();
@@ -395,7 +395,7 @@ public class BlockRanks extends JavaPlugin
             System.out.println("Query ist fehlgeschlagen: " + ex.getMessage());
         }   
                                           
-   
+        
                      
                  
                  }
