@@ -242,6 +242,15 @@ public class BlockRanks extends JavaPlugin
     		} else {
          if (cmd.getName().equalsIgnoreCase("Ranks")) {
              
+             if (args.length == 0)
+             {
+                 
+                 player.sendMessage("/Ranks blocks");
+                 player.sendMessage("/Ranks top5");
+                 player.sendMessage("/Ranks reload");
+                 
+             }
+             
              if (args.length > 0){
                  if (args[0].equalsIgnoreCase("blocks")){
                     Long Blocks1 = player_blocks.get(player.getName());
@@ -325,21 +334,85 @@ public class BlockRanks extends JavaPlugin
                  
                  else if (args[0].equalsIgnoreCase("reload")){
                      if (perms.has(player, "BlockRanks.reload")){
-                     for(Player player1 : getServer().getOnlinePlayers()) 
-        { 
-        SQL.setBlocks(player1.getName(), BlockRanks.player_blocks.get(player.getName()));
-        }
+
                      Bukkit.getServer().broadcastMessage("[BlockRanks] "+ this.getConfig().getString("Messanges.reloadstart"));
                      
                      this.reloadConfig();
                      
                      Bukkit.getServer().broadcastMessage("[BlockRanks] " + this.getConfig().getString("Messanges.reloadend"));
                      }
-                     else
+                     else{
                          player.sendMessage(this.getConfig().getString("Messanges.nopermission"));
+                     }
                  }
+                    
+                 else if (args[0].equalsIgnoreCase("purge")){
+        Connection conn = null;
+        Statement  st = null;
+        ResultSet  rs = null;
+        try 
+        { 
+             Class.forName("org.gjt.mm.mysql.Driver"); 
+        } 
+        catch(ClassNotFoundException cnfe) 
+        { 
+            System.out.println("Treiber kann nicht geladen werden: "+cnfe.getMessage()); 
+        }
+        
+        try 
+        { 
+         conn = DriverManager.getConnection("jdbc:mysql://" + BlockRanks.host + ":" + BlockRanks.port + "/" + BlockRanks.db, BlockRanks.username, BlockRanks.password); 
+        } 
+        catch(SQLException sqle) 
+        { 
+        System.out.println("Verbindung ist fehlgeschlagen: " + sqle.getMessage()); 
+        }
+        try
+        {
+           st = conn.createStatement();
+          
+           
+                 String query =   ( "UPDATE `BlockRanks` SET `blocks` = 0 WHERE 1");
+                 
+                 PreparedStatement preparedStmt = conn.prepareStatement(query);
+                 
+                 preparedStmt.executeUpdate();
+                 
+               //  conn.close();
+                 
+                // rs = st.executeUpdate(query);
+        }
+        catch(SQLException sqle){
+            System.out.println("Query ist fehlgeschlagen: " + sqle.getMessage());
+        }
+        try {
+            conn.close();
+        } catch (SQLException ex) {
+            System.out.println("Query ist fehlgeschlagen: " + ex.getMessage());
+        }   
+                                          
+   
+                     
+                 
+                 }
+                 
+                 }
+             if(args.length > 1){
+                 
+                 if (args[0].equalsIgnoreCase("set")){
+                     String s = args[2];
+                     long l;
+                      try {
+        l = Long.parseLong(s.trim());
+        me.crosant.blockranks.SQL.setBlocks(args[1], l);
+      } catch (NumberFormatException nfe) {
+         System.out.println("NumberFormatException: " + nfe.getMessage());
+      }
+                     
                      
                  }
+                 
+             }
                  
                  
              }
@@ -369,9 +442,10 @@ public class BlockRanks extends JavaPlugin
     }
     
     public boolean giveCash(Player player,Long amount){
-        
+        if (amount != 0){
         player.sendMessage(this.getConfig().getString("Messanges.money").replace("%money%", amount.toString()));
-        economy.depositPlayer(player.getName(), amount);       
+        economy.depositPlayer(player.getName(), amount);
+        }
         return true;
         
     }
