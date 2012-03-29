@@ -19,11 +19,15 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
+import ru.tehkode.permissions.PermissionEntity;
+import ru.tehkode.permissions.PermissionManager;
+import ru.tehkode.permissions.bukkit.PermissionsEx;
 
 
 public class BlockRanks extends JavaPlugin 
 {
     public static Permission perms = null;
+    public static BlockRanks plugin;
         public static String username;
 	public static String password;
 	public static String db;
@@ -346,7 +350,7 @@ public class BlockRanks extends JavaPlugin
                      }
                  }
                     
-                 else if (args[0].equalsIgnoreCase("purge")){
+                 else if (args[0].equalsIgnoreCase("purge") && perms.has(player, "BlockRanks.purge")){
         Connection conn = null;
         Statement  st = null;
         ResultSet  rs = null;
@@ -399,13 +403,84 @@ public class BlockRanks extends JavaPlugin
                  }
              if(args.length > 1){
                  
-                 if (args[0].equalsIgnoreCase("set")){
+                 if (args[0].equalsIgnoreCase("set") && perms.has(player, "BlockRanks.set")){
                      String s = args[2];
-                     long l;
+                     long lo;
                       try {
-        l = Long.parseLong(s.trim());
-        me.crosant.blockranks.SQL.setBlocks(args[1], l);
-      } catch (NumberFormatException nfe) {
+        lo = Long.parseLong(s.trim());
+        BlockRanks.player_blocks.put(args[1], lo);
+                    PermissionManager manager = PermissionsEx.getPermissionManager();
+
+              PermissionManager pex = PermissionsEx.getPermissionManager();
+              PermissionEntity entity = pex.getUser(player);
+              String[] groups =  manager.getUser(player).getGroupsNames();
+                      for(int i = 1; i <= 25; i++) manager.getUser(player).removeGroup(plugin.getConfig().getString("Rank."+ i +".name"));
+              for(int i = 1; i <=25; i++){
+                  
+                 // System.out.println(plugin.getConfig().getString("Rank."+ i +".name"));
+                  if(plugin.getConfig().getString("Rank."+ i +".name") != null){
+                  
+                      
+                      //System.out.println(plugin.getConfig().getString("Rank."+ i +".name"));
+                      if (i > 1){
+                          //System.out.println(plugin.getConfig().getString("Rank."+ i +".name"));
+                             //                 System.out.println(plugin.getConfig().getString("Messanges.rankup").replace("%rank%", plugin.getConfig().getString("Rank." + i + ".name")));
+                          
+                      if (BlockRanks.player_blocks.get(player.getName()) >= plugin.getConfig().getLong("Rank." + i + ".blocks")){
+                 //   System.out.println(plugin.getConfig().getString("Messanges.rankup").replace("%rank%", plugin.getConfig().getString("Rank." + i + ".name")));
+                    player.sendMessage(plugin.getConfig().getString("Messanges.rankup").replace("%rank%", plugin.getConfig().getString("Rank." + i + ".name")) );
+                    plugin.giveCash(player, plugin.getConfig().getLong("Rank." + i + ".money"));
+                    
+                    
+                    
+                    for (int n = 0; n<groups.length; n++){
+                        System.out.println(groups[n]);
+                    manager.getUser(player).removeGroup(groups[n]);
+                    }
+                    
+                    
+                    
+                    
+                    
+                    manager.getUser(player).addGroup(plugin.getConfig().getString("Rank." + i + ".name"));
+                     for (int l = 0; l <groups.length; l++){
+                  manager.getUser(player).addGroup(groups[l]);
+                     }
+                  int o = i-1;
+                 manager.getUser(player).removeGroup(plugin.getConfig().getString("Rank."+ o + ".name"));   
+                      }
+                      }
+                      else {
+                     if (BlockRanks.player_blocks.get(player.getName()) >= plugin.getConfig().getLong("Rank." + i + ".blocks")){
+                    
+                    player.sendMessage(plugin.getConfig().getString("Messanges.rankup").replace("%rank%", plugin.getConfig().getString("Rank." + i + ".name")) );
+                    plugin.giveCash(player, plugin.getConfig().getLong("Rank." + i + ".money"));
+                                        for (int n = 0; n<groups.length; n++){
+                    manager.getUser(player).removeGroup(groups[n]);
+                    }
+                                                          manager.getUser(player).addGroup(plugin.getConfig().getString("Rank." + i + ".name"));
+
+                     for (int l = 0; l <groups.length; l++){
+                  manager.getUser(player).addGroup(groups[l]);
+                     }                                                }
+                      }
+                }
+                  }
+                  
+              
+                
+
+              
+                      
+                      
+                      
+                      
+                      
+                      
+                      
+                      
+                      
+                      } catch (NumberFormatException nfe) {
          System.out.println("NumberFormatException: " + nfe.getMessage());
       }
                      
