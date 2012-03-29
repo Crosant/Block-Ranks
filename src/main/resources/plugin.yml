@@ -10,6 +10,12 @@ permissions:
     description: Gives access to all BlockRanks commands
     children:
       BlockRanks.reload: true
+      BlockRanks.purge: true
+      BlockRanks.set: true
   BlockRanks.reload:
      description: BlockRanks Reload
+  BlockRanks.purge:
+     description: BlockRanks Purge
+  BlockRanks.set:
+     description: BlockRanks Set
 depend: [Vault]
