@@ -44,6 +44,37 @@ public class BlockRanksBlockListener implements Listener{
                 Block block = event.getBlock();
                 Material mat = block.getType();
                 //blocks = SQL.getBlocks(player);
+                
+                for(int h = 1; h <= 5;h++){
+                String worlds[] = new String[5];
+                worlds[h] = plugin.getConfig().getString("HalfBlockWorlds." + h + ".name");
+                if(player.getWorld().getName().toString().equalsIgnoreCase(worlds[h]))
+                {
+                    if(BlockRanks.player_bool.get(player.getName()) == true){
+                        
+                         if (BlockRanks.player_blocks.get(player.getName()) != null){
+                blocks = BlockRanks.player_blocks.get(player.getName());
+                }
+                else
+                {
+                    long u = 1;
+                    BlockRanks.player_blocks.put(player.getName(), u);
+                }
+                long blocks1 = blocks + 1;
+                //SQL.setBlocks(player, blocks1);
+                BlockRanks.player_blocks.put(player.getName(), blocks1);
+                
+                        
+                        BlockRanks.player_bool.put(player.getName(), false);
+                    }
+                    
+                    else{
+                        BlockRanks.player_bool.put(player.getName(), true);
+                    }
+                    
+                }
+                
+                else{
                 if (BlockRanks.player_blocks.get(player.getName()) != null){
                 blocks = BlockRanks.player_blocks.get(player.getName());
                 }
@@ -55,6 +86,12 @@ public class BlockRanksBlockListener implements Listener{
                 long blocks1 = blocks + 1;
                 //SQL.setBlocks(player, blocks1);
                 BlockRanks.player_blocks.put(player.getName(), blocks1);
+                
+                }
+                }
+                
+                
+                
                 
                 
                // player.sendMessage(BlockRanks.player_blocks.get(player).toString());

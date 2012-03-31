@@ -36,6 +36,7 @@ public class BlockRanks extends JavaPlugin
         public static Economy economy = null;
 
         public static Map<String, Long> player_blocks = new HashMap<String, Long>();
+         public static Map<String, Boolean> player_bool = new HashMap<String, Boolean>();
         
         private static Vault vault = null;
 
