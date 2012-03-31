@@ -46,7 +46,7 @@ public class BlockRanksBlockListener implements Listener{
                 //blocks = SQL.getBlocks(player);
                 
                 for(int h = 1; h <= 5;h++){
-                String worlds[] = new String[5];
+                String worlds[] = new String[6];
                 worlds[h] = plugin.getConfig().getString("HalfBlockWorlds." + h + ".name");
                 if(player.getWorld().getName().toString().equalsIgnoreCase(worlds[h]))
                 {
