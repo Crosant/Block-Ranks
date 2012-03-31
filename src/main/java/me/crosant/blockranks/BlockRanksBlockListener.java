@@ -75,7 +75,11 @@ public class BlockRanksBlockListener implements Listener{
                 }
                 
                 else{
-                if (BlockRanks.player_blocks.get(player.getName()) != null){
+               
+                }
+                }
+                
+                 if (BlockRanks.player_blocks.get(player.getName()) != null){
                 blocks = BlockRanks.player_blocks.get(player.getName());
                 }
                 else
@@ -87,8 +91,6 @@ public class BlockRanksBlockListener implements Listener{
                 //SQL.setBlocks(player, blocks1);
                 BlockRanks.player_blocks.put(player.getName(), blocks1);
                 
-                }
-                }
                 
                 
                 
