@@ -78,8 +78,19 @@ public class BlockRanksBlockListener implements Listener{
                
                 }
                 }
+                String worlds[] = new String[6];
+                for(int d = 0; d <= 5; d++){
+                    
+                    
                 
-                 if (BlockRanks.player_blocks.get(player.getName()) != null){
+                worlds[d] = plugin.getConfig().getString("HalfBlockWorlds." + d + ".name");
+                    
+                    
+                    
+                }
+                
+                
+                if (BlockRanks.player_blocks.get(player.getName()) != null && player.getWorld().getName().toString() != worlds[1]&& player.getWorld().getName().toString() != worlds[2]&& player.getWorld().getName().toString() != worlds[3]&& player.getWorld().getName().toString() != worlds[4]&& player.getWorld().getName().toString() != worlds[5]){
                 blocks = BlockRanks.player_blocks.get(player.getName());
                 }
                 else
