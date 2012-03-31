@@ -39,13 +39,19 @@ public class BlockRanksBlockListener implements Listener{
                 
                 if(plugin.getConfig().getBoolean("Basic.activated") == true){
                     
-                long blocks;
+                long blocks = 0;
                 Player player = event.getPlayer();
                 Block block = event.getBlock();
                 Material mat = block.getType();
                 //blocks = SQL.getBlocks(player);
+                if (BlockRanks.player_blocks.get(player.getName()) != null){
                 blocks = BlockRanks.player_blocks.get(player.getName());
-
+                }
+                else
+                {
+                    long u = 1;
+                    BlockRanks.player_blocks.put(player.getName(), u);
+                }
                 long blocks1 = blocks + 1;
                 //SQL.setBlocks(player, blocks1);
                 BlockRanks.player_blocks.put(player.getName(), blocks1);
