@@ -208,7 +208,7 @@ public class BlockRanks extends JavaPlugin
         this.getConfig().set("Messanges.money", "You have get %money%");
         //this.getConfig().set("Messanges.register", "%player% is now registered to BlockRanks");
         
-  	
+  	this.getConfig().set("HalfBlockWorlds.1.name", "Creative");
     	
     	
     	
