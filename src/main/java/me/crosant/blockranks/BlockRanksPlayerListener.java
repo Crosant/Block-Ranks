@@ -25,9 +25,9 @@ public class BlockRanksPlayerListener implements Listener{
 
         @EventHandler
         public void onPlayerJoin(PlayerJoinEvent event){
-            
+           
         Player player = event.getPlayer();
-        
+        BlockRanks.player_bool.put(player.getName(), false);
         
         
         Connection conn = null;
