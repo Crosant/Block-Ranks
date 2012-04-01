@@ -89,18 +89,20 @@ public class BlockRanksBlockListener implements Listener{
                     
                 }
                 
-                
-                if (BlockRanks.player_blocks.get(player.getName()) != null && player.getWorld().getName().toString() != worlds[1]&& player.getWorld().getName().toString() != worlds[2]&& player.getWorld().getName().toString() != worlds[3]&& player.getWorld().getName().toString() != worlds[4]&& player.getWorld().getName().toString() != worlds[5]){
+                if (player.getWorld().getName().toString().equalsIgnoreCase(worlds[1])&& !player.getWorld().getName().toString().equalsIgnoreCase(worlds[2])&& !player.getWorld().getName().toString().equalsIgnoreCase(worlds[3])&& !player.getWorld().getName().toString().equalsIgnoreCase(worlds[4])&& !player.getWorld().getName().toString().equalsIgnoreCase(worlds[5]))
+                {
+                    if (BlockRanks.player_blocks.get(player.getName()) != null){
                 blocks = BlockRanks.player_blocks.get(player.getName());
+                long blocks1 = blocks + 1;
+                //SQL.setBlocks(player, blocks1);
+                BlockRanks.player_blocks.put(player.getName(), blocks1);
                 }
                 else
                 {
                     long u = 1;
                     BlockRanks.player_blocks.put(player.getName(), u);
                 }
-                long blocks1 = blocks + 1;
-                //SQL.setBlocks(player, blocks1);
-                BlockRanks.player_blocks.put(player.getName(), blocks1);
+                }
                 
                 
                 
