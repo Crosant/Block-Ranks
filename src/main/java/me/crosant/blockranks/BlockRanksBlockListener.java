@@ -89,7 +89,7 @@ public class BlockRanksBlockListener implements Listener {
 
 			}*/
 
-			if (player.getWorld().getName().toString().equalsIgnoreCase(worlds[1])&& !player.getWorld().getName().toString().equalsIgnoreCase(worlds[2])&& !player.getWorld().getName().toString().equalsIgnoreCase(worlds[3])&& !player.getWorld().getName().toString().equalsIgnoreCase(worlds[4])&& !player.getWorld().getName().toString().equalsIgnoreCase(worlds[5])) {
+			if (!player.getWorld().getName().toString().equalsIgnoreCase(worlds[1])&& !player.getWorld().getName().toString().equalsIgnoreCase(worlds[2])&& !player.getWorld().getName().toString().equalsIgnoreCase(worlds[3])&& !player.getWorld().getName().toString().equalsIgnoreCase(worlds[4])&& !player.getWorld().getName().toString().equalsIgnoreCase(worlds[5])) {
 			
 				if (BlockRanks.player_blocks.get(player.getName()) != null) {
 				
