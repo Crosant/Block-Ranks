@@ -40,10 +40,12 @@ public class BlockRanksBlockListener implements Listener {
 			Block block = event.getBlock();
 			Material mat = block.getType();
 			//blocks = SQL.getBlocks(player);
+                        String worlds[] = new String[6];
 
+                        
+                        
 			for(int h = 1; h <= 5;h++) {
 			
-				String worlds[] = new String[6];
 				worlds[h] = plugin.getConfig().getString("HalfBlockWorlds." + h + ".name");
 				
 				if(player.getWorld().getName().toString().equalsIgnoreCase(worlds[h])) {
@@ -79,13 +81,13 @@ public class BlockRanksBlockListener implements Listener {
 				}
 			}
 			
-			String worlds[] = new String[6];
 			
-			for(int d = 0; d <= 5; d++) {
+			
+			/*for(int d = 0; d <= 5; d++) {
 
 				worlds[d] = plugin.getConfig().getString("HalfBlockWorlds." + d + ".name");
 
-			}
+			}*/
 
 			if (player.getWorld().getName().toString().equalsIgnoreCase(worlds[1])&& !player.getWorld().getName().toString().equalsIgnoreCase(worlds[2])&& !player.getWorld().getName().toString().equalsIgnoreCase(worlds[3])&& !player.getWorld().getName().toString().equalsIgnoreCase(worlds[4])&& !player.getWorld().getName().toString().equalsIgnoreCase(worlds[5])) {
 			
