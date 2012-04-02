@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package me.crosant.blockranks;
 
 import java.util.logging.Logger;
@@ -19,10 +15,10 @@ import ru.tehkode.permissions.PermissionManager;
 import ru.tehkode.permissions.bukkit.PermissionsEx;
 
 /**
- *
- * @author Florian
- */
-public class BlockRanksBlockListener implements Listener{
+*
+* @author Florian
+*/
+public class BlockRanksBlockListener implements Listener {
 
     
     private final BlockRanks plugin;
@@ -34,155 +30,180 @@ public class BlockRanksBlockListener implements Listener{
     
     
     
-        @EventHandler
-            public void onBlockPlace(BlockPlaceEvent event){
-                
-                if(plugin.getConfig().getBoolean("Basic.activated") == true){
-                    
-                long blocks = 0;
-                Player player = event.getPlayer();
-                Block block = event.getBlock();
-                Material mat = block.getType();
-                //blocks = SQL.getBlocks(player);
-                
-                for(int h = 1; h <= 5;h++){
-                String worlds[] = new String[6];
-                worlds[h] = plugin.getConfig().getString("HalfBlockWorlds." + h + ".name");
-                if(player.getWorld().getName().toString().equalsIgnoreCase(worlds[h]))
-                {
-                    if(BlockRanks.player_bool.get(player.getName()) == true){
-                        
-                         if (BlockRanks.player_blocks.get(player.getName()) != null){
-                blocks = BlockRanks.player_blocks.get(player.getName());
-                }
-                else
-                {
-                    long u = 1;
-                    BlockRanks.player_blocks.put(player.getName(), u);
-                }
-                long blocks1 = blocks + 1;
-                //SQL.setBlocks(player, blocks1);
-                BlockRanks.player_blocks.put(player.getName(), blocks1);
-                
-                        
-                        BlockRanks.player_bool.put(player.getName(), false);
-                    }
-                    
-                    else{
-                        BlockRanks.player_bool.put(player.getName(), true);
-                    }
-                    
-                }
-                
-                else{
-               
-                }
-                }
-                String worlds[] = new String[6];
-                for(int d = 0; d <= 5; d++){
-                    
-                    
-                
-                worlds[d] = plugin.getConfig().getString("HalfBlockWorlds." + d + ".name");
-                    
-                    
-                    
-                }
-                
-                if (player.getWorld().getName().toString().equalsIgnoreCase(worlds[1])&& !player.getWorld().getName().toString().equalsIgnoreCase(worlds[2])&& !player.getWorld().getName().toString().equalsIgnoreCase(worlds[3])&& !player.getWorld().getName().toString().equalsIgnoreCase(worlds[4])&& !player.getWorld().getName().toString().equalsIgnoreCase(worlds[5]))
-                {
-                    if (BlockRanks.player_blocks.get(player.getName()) != null){
-                blocks = BlockRanks.player_blocks.get(player.getName());
-                long blocks1 = blocks + 1;
-                //SQL.setBlocks(player, blocks1);
-                BlockRanks.player_blocks.put(player.getName(), blocks1);
-                }
-                else
-                {
-                    long u = 1;
-                    BlockRanks.player_blocks.put(player.getName(), u);
-                }
-                }
-                
-                
-                
-                
-                
-                
-               // player.sendMessage(BlockRanks.player_blocks.get(player).toString());
-                
-              if(Bukkit.getServer().getPluginManager().isPluginEnabled("PermissionsEx")){
-              PermissionManager manager = PermissionsEx.getPermissionManager();
+    @EventHandler
+	public void onBlockPlace(BlockPlaceEvent event) {
 
-              PermissionManager pex = PermissionsEx.getPermissionManager();
-              PermissionEntity entity = pex.getUser(player);
-              String[] groups =  manager.getUser(player).getGroupsNames();
-           /*   int p = 0;
-              while (groups.length > p){
-              System.out.println(player.getName() + "        !!!!!!!!!!!           " + groups[p]);
-              p++;
-              }*/
-              for(int i = 1; i <=25; i++){
-                 // System.out.println(plugin.getConfig().getString("Rank."+ i +".name"));
-                  if(plugin.getConfig().getString("Rank."+ i +".name") != null){
-                      //System.out.println(plugin.getConfig().getString("Rank."+ i +".name"));
-                      if (i > 1){
-                          //System.out.println(plugin.getConfig().getString("Rank."+ i +".name"));
-                             //                 System.out.println(plugin.getConfig().getString("Messanges.rankup").replace("%rank%", plugin.getConfig().getString("Rank." + i + ".name")));
-                          
-                      if (BlockRanks.player_blocks.get(player.getName()).equals(plugin.getConfig().getLong("Rank." + i + ".blocks"))){
-                 //   System.out.println(plugin.getConfig().getString("Messanges.rankup").replace("%rank%", plugin.getConfig().getString("Rank." + i + ".name")));
-                    player.sendMessage(plugin.getConfig().getString("Messanges.rankup").replace("%rank%", plugin.getConfig().getString("Rank." + i + ".name")) );
-                    plugin.giveCash(player, plugin.getConfig().getLong("Rank." + i + ".money"));
-                    
-                    for (int n = 0; n<groups.length; n++){
-                        System.out.println(groups[n]);
-                    manager.getUser(player).removeGroup(groups[n]);
-                    }
-                    
-                    
-                    
-                    
-                    
-                    manager.getUser(player).addGroup(plugin.getConfig().getString("Rank." + i + ".name"));
-                     for (int l = 0; l <groups.length; l++){
-                  manager.getUser(player).addGroup(groups[l]);
-                     }
-                  int o = i-1;
-                 manager.getUser(player).removeGroup(plugin.getConfig().getString("Rank."+ o + ".name"));   
-                      
-                      }
-                      else {
-                     if (BlockRanks.player_blocks.get(player.getName()).equals(plugin.getConfig().getLong("Rank." + i + ".blocks"))){
-                    
-                    player.sendMessage(plugin.getConfig().getString("Messanges.rankup").replace("%rank%", plugin.getConfig().getString("Rank." + i + ".name")) );
-                    plugin.giveCash(player, plugin.getConfig().getLong("Rank." + i + ".money"));
-                                        for (int n = 0; n<groups.length; n++){
-                    manager.getUser(player).removeGroup(groups[n]);
-                    }
-                                                          manager.getUser(player).addGroup(plugin.getConfig().getString("Rank." + i + ".name"));
+		if(plugin.getConfig().getBoolean("Basic.activated") == true) {
 
-                     for (int l = 0; l <groups.length; l++){
-                  manager.getUser(player).addGroup(groups[l]);
-                     }                                                }
-                      }
-                }
-                  }
-                  
-              
-                
+			long blocks = 0;
+			Player player = event.getPlayer();
+			Block block = event.getBlock();
+			Material mat = block.getType();
+			//blocks = SQL.getBlocks(player);
 
-              }
-              
-                  
-              }
-              }
-              else {
-                  
-                     Logger.getLogger("Minecraft").warning("PermissionsEx plugin are not found.");
+			for(int h = 1; h <= 5;h++) {
+			
+				String worlds[] = new String[6];
+				worlds[h] = plugin.getConfig().getString("HalfBlockWorlds." + h + ".name");
+				
+				if(player.getWorld().getName().toString().equalsIgnoreCase(worlds[h])) {
+				
+					if(BlockRanks.player_bool.get(player.getName()) == true) {
 
-              }
-              //  player.sendMessage("You placed a block with ID : " + mat);
-    
-}
+						if (BlockRanks.player_blocks.get(player.getName()) != null) {
+							
+						}
+						else {
+							long u = 1;
+							BlockRanks.player_blocks.put(player.getName(), u);
+						}
+						
+						long blocks1 = blocks + 1;
+						//SQL.setBlocks(player, blocks1);
+						BlockRanks.player_blocks.put(player.getName(), blocks1);
+
+						BlockRanks.player_bool.put(player.getName(), false);
+						
+					}
+
+					else {
+					
+						BlockRanks.player_bool.put(player.getName(), true);
+						
+					}
+
+				}
+
+				else {
+
+				}
+			}
+			
+			String worlds[] = new String[6];
+			
+			for(int d = 0; d <= 5; d++) {
+
+				worlds[d] = plugin.getConfig().getString("HalfBlockWorlds." + d + ".name");
+
+			}
+
+			if (player.getWorld().getName().toString().equalsIgnoreCase(worlds[1])&& !player.getWorld().getName().toString().equalsIgnoreCase(worlds[2])&& !player.getWorld().getName().toString().equalsIgnoreCase(worlds[3])&& !player.getWorld().getName().toString().equalsIgnoreCase(worlds[4])&& !player.getWorld().getName().toString().equalsIgnoreCase(worlds[5])) {
+			
+				if (BlockRanks.player_blocks.get(player.getName()) != null) {
+				
+					blocks = BlockRanks.player_blocks.get(player.getName());
+					long blocks1 = blocks + 1;
+					//SQL.setBlocks(player, blocks1);
+					BlockRanks.player_blocks.put(player.getName(), blocks1);
+					
+				}
+				else {
+				
+					long u = 1;
+					BlockRanks.player_blocks.put(player.getName(), u);
+					
+				}
+			}
+
+
+
+
+
+
+			// player.sendMessage(BlockRanks.player_blocks.get(player).toString());
+
+			if(Bukkit.getServer().getPluginManager().isPluginEnabled("PermissionsEx")) {
+			
+				PermissionManager manager = PermissionsEx.getPermissionManager();
+
+				PermissionManager pex = PermissionsEx.getPermissionManager();
+				PermissionEntity entity = pex.getUser(player);
+				String[] groups = manager.getUser(player).getGroupsNames();
+				
+				/* int p = 0;
+				while (groups.length > p) {
+					System.out.println(player.getName() + " !!!!!!!!!!! " + groups[p]);
+					p++;
+				}*/
+				
+				for(int i = 1; i <=25; i++) {
+				
+					// System.out.println(plugin.getConfig().getString("Rank."+ i +".name"));
+					if(plugin.getConfig().getString("Rank."+ i +".name") != null) {
+					
+						//System.out.println(plugin.getConfig().getString("Rank."+ i +".name"));
+						
+						if (i > 1) {
+						
+							//System.out.println(plugin.getConfig().getString("Rank."+ i +".name"));
+							//System.out.println(plugin.getConfig().getString("Messanges.rankup").replace("%rank%", plugin.getConfig().getString("Rank." + i + ".name")));
+
+							if (BlockRanks.player_blocks.get(player.getName()).equals(plugin.getConfig().getLong("Rank." + i + ".blocks"))) {
+							
+								// System.out.println(plugin.getConfig().getString("Messanges.rankup").replace("%rank%", plugin.getConfig().getString("Rank." + i + ".name")));
+								player.sendMessage(plugin.getConfig().getString("Messanges.rankup").replace("%rank%", plugin.getConfig().getString("Rank." + i + ".name")) );
+								plugin.giveCash(player, plugin.getConfig().getLong("Rank." + i + ".money"));
+
+								for (int n = 0; n<groups.length; n++) {
+								
+									System.out.println(groups[n]);
+									manager.getUser(player).removeGroup(groups[n]);
+									
+								}
+
+
+
+
+
+								manager.getUser(player).addGroup(plugin.getConfig().getString("Rank." + i + ".name"));
+								for (int l = 0; l <groups.length; l++) {
+								
+								manager.getUser(player).addGroup(groups[l]);
+								
+								}
+								
+								int o = i-1;
+								manager.getUser(player).removeGroup(plugin.getConfig().getString("Rank."+ o + ".name"));
+
+							}
+							else {
+							
+								if (BlockRanks.player_blocks.get(player.getName()).equals(plugin.getConfig().getLong("Rank." + i + ".blocks"))) {
+
+									player.sendMessage(plugin.getConfig().getString("Messanges.rankup").replace("%rank%", plugin.getConfig().getString("Rank." + i + ".name")) );
+									plugin.giveCash(player, plugin.getConfig().getLong("Rank." + i + ".money"));
+									
+									for (int n = 0; n<groups.length; n++) {
+									
+										manager.getUser(player).removeGroup(groups[n]);
+										
+									}
+									
+									manager.getUser(player).addGroup(plugin.getConfig().getString("Rank." + i + ".name"));
+
+									for (int l = 0; l <groups.length; l++) {
+										manager.getUser(player).addGroup(groups[l]);
+									} 
+									
+								}
+							
+							}
+							
+						}
+						
+					}
+
+				}
+
+			}
+			
+		}
+		else {
+
+		Logger.getLogger("Minecraft").warning("PermissionsEx plugin are not found.");
+
+		}
+		// player.sendMessage("You placed a block with ID : " + mat);
+
+	}
 }
